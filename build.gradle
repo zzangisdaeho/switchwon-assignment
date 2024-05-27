@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group = 'com.switchwon'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+subprojects {
+    group = 'com.switchwon'
+    sourceCompatibility = '17'
+
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    // 관리하는 모듈의 공통 dependencies
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.32'
+        annotationProcessor 'org.projectlombok:lombok:1.18.32'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
