@@ -1,5 +1,6 @@
 package com.switchwon.paymentimpl.payment.in;
 
+import com.switchwon.avro.TestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,4 +13,5 @@ public class PaymentController {
     public String test(){
         return "test";
     }
+
 }
