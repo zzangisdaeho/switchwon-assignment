@@ -1,4 +1,5 @@
 rootProject.name = 'switchwon'
 include 'payment-impl'
 include 'payment'
+include 'payment-share'
 
