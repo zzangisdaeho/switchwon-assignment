@@ -1,39 +1,31 @@
 package com.switchwon.paymentimpl.payment.in;
 
+import com.switchwon.paymentimpl.payment.out.PaymentService;
+import com.switchwon.paymentimpl.payment.out.entity.Payment;
+import com.switchwon.paymentimpl.payment.out.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("payment")
 public class PaymentController {
 
-    @GetMapping("/test")
-    public String test(){
-        return "test";
+    private final PaymentService paymentService;
+
+    @GetMapping("/balance/{userId}")
+    public User getBalance(@PathVariable String userId) {
+        return paymentService.getBalance(userId);
     }
 
-    @GetMapping("/test2")
-    public Object test2(){
-        return "test";
-    }
-
-    @GetMapping("/balance")
-    public String getBalance(){
-        return "test";
-    }
-
-    @GetMapping("/estimate")
-    public String estimate(){
-        return "test";
+    @PostMapping("/estimate")
+    public Payment estimatePayment(@RequestBody Payment payment) {
+        return paymentService.estimatePayment(payment);
     }
 
     @PostMapping("/approval")
-    public String approval(){
-        return "test";
+    public Payment approvePayment(@RequestBody Payment payment) {
+        return paymentService.approvePayment(payment);
     }
 
 }

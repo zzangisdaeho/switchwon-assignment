@@ -1,6 +1,6 @@
 package com.switchwon.paymentimpl.avro;
 
-import com.switchwon.avro.EstimateRequestDto;
+import com.switchwon.avro.request.EstimateRequestDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

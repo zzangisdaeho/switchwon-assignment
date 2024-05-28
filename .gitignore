@@ -8,10 +8,11 @@ build/
 src/main/avro/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+#.idea/modules.xml
+#.idea/jarRepositories.xml
+#.idea/compiler.xml
+#.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
