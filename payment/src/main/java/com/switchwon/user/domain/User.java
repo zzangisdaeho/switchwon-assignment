@@ -14,6 +14,7 @@ public class User {
 
     private String userId;
 
+    @Builder.Default
     private List<Balance> balances = new ArrayList<>();
 
     public List<Balance> balances(){
@@ -22,5 +23,10 @@ public class User {
 
     public List<? extends Balance> getBalances(){
         return balances;
+    }
+
+    public void addBalance(Balance balance){
+        this.balances.add(balance);
+        balance.setUser(this);
     }
 }

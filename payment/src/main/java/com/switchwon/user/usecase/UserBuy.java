@@ -1,24 +1,23 @@
 package com.switchwon.user.usecase;
 
-import com.switchwon.consts.Currency;
 import com.switchwon.consts.PayType;
-import com.switchwon.user.dto.event.BuyEvent;
+import com.switchwon.event.PurchaseEvent;
 import com.switchwon.user.usecase.payment_method.PaymentMethod;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class Buy {
+public class UserBuy {
 
     private final List<PaymentMethod> paymentMethodList;
 
-    public void buy(BuyEvent buyEvent){
+    public void buy(PurchaseEvent purchaseEvent){
 
-        PaymentMethod handler = paymentMethodList.stream().filter(paymentMethod -> paymentMethod.able(PayType.match(buyEvent.getPaymentMethod())))
+        PaymentMethod handler = paymentMethodList.stream().filter(paymentMethod -> paymentMethod.able(purchaseEvent.getPaymentMethod()))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("payType not matched"));
 
-        handler.pay(buyEvent);
+        handler.processPayment(purchaseEvent);
 
 
     }

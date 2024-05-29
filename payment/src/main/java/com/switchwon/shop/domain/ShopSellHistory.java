@@ -1,16 +1,18 @@
 package com.switchwon.shop.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ShopSellHistory {
 
-    private Long historyNum;
+    private String transactionId;
 
     private Shop shop;
 
