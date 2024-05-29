@@ -2,21 +2,21 @@ package com.switchwon.user.domain;
 
 import com.switchwon.consts.ChangeReason;
 import com.switchwon.consts.Currency;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class BalanceChangeHistory {
 
-    private String userId;
+    private Long historyNum;
+
+    private User user;
 
     private Currency currency;
 
@@ -27,4 +27,5 @@ public class BalanceChangeHistory {
     private ChangeReason reason;
 
     private ZonedDateTime eventTime;
+
 }

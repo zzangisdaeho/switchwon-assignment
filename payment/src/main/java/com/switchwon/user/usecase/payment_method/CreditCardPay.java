@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchwon.consts.ChangeReason;
 import com.switchwon.consts.Currency;
 import com.switchwon.consts.PayType;
-import com.switchwon.shop.domain.Shop;
 import com.switchwon.user.adaptor.BalanceChangeHistoryStore;
-import com.switchwon.user.adaptor.BalanceChanger;
+import com.switchwon.user.adaptor.BalanceStore;
 import com.switchwon.user.adaptor.UserStore;
 import com.switchwon.user.domain.Balance;
 import com.switchwon.user.domain.BalanceChangeHistory;
@@ -16,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.function.Supplier;
 
 
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class CreditCardPay implements PaymentMethod{
 
     private final UserStore userStore;
     private final BalanceChangeHistoryStore balanceChangeHistoryStore;
-    private final BalanceChanger balanceChanger;
+    private final BalanceStore balanceStore;
 
     @Override
     public boolean able(PayType payType) {
@@ -37,7 +37,9 @@ public class CreditCardPay implements PaymentMethod{
 
         Currency matchCurrency = Currency.match(buyEvent.getPaymentMethod());
 
-        Balance currencyBalance = user.getBalances().stream().filter(balance -> balance.getCurrency().equals(matchCurrency)).findFirst().orElseThrow();
+        Balance currencyBalance = user.balances().stream().filter(balance -> balance.getCurrency().equals(matchCurrency))
+                .findFirst()
+                .orElseGet(getSupplier(user, matchCurrency));
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -62,7 +64,7 @@ public class CreditCardPay implements PaymentMethod{
         //todo : 신용카드 정보로 충전하는 로직
 
         BalanceChangeHistory balanceChangeHistory = BalanceChangeHistory.builder()
-                .userId(user.getUserId())
+                .user(user)
                 .currency(currency)
                 .changeAmount(amount)
                 .currentAmount(
@@ -75,8 +77,22 @@ public class CreditCardPay implements PaymentMethod{
 
         balanceChangeHistoryStore.recordHistory(balanceChangeHistory);
 
-        return balanceChanger.adjustBalance(user, currency);
+
+
+        return balanceStore.adjustBalance(user, currency);
     }
+
+    public Supplier<Balance> getSupplier(User user, Currency currency) {
+        return () -> {
+            Balance build = Balance.builder()
+                    .balance(BigDecimal.ZERO)
+                    .currency(currency)
+                    .user(user)
+                    .build();
+            return balanceStore.registerBalance(build);
+        };
+    }
+
 
     @ToString
     private class Card {
