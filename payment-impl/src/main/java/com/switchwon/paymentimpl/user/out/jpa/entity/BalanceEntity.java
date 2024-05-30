@@ -1,4 +1,4 @@
-package com.switchwon.paymentimpl.user.out.entity;
+package com.switchwon.paymentimpl.user.out.jpa.entity;
 
 import com.switchwon.consts.Currency;
 import com.switchwon.user.domain.Balance;

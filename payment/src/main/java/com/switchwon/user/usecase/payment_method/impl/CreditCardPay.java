@@ -3,6 +3,7 @@ package com.switchwon.user.usecase.payment_method.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchwon.consts.PayType;
 import com.switchwon.user.adaptor.BalanceChangeHistoryStore;
+import com.switchwon.user.adaptor.ChargeHistoryStore;
 import com.switchwon.user.adaptor.UserStore;
 import com.switchwon.user.domain.Balance;
 import com.switchwon.event.PurchaseEvent;
@@ -13,8 +14,8 @@ import lombok.ToString;
 import java.math.BigDecimal;
 
 public class CreditCardPay extends AbstractPaymentMethod {
-    public CreditCardPay(UserStore userStore, BalanceChangeHistoryStore balanceChangeHistoryStore) {
-        super(userStore, balanceChangeHistoryStore);
+    public CreditCardPay(BalanceChangeHistoryStore balanceChangeHistoryStore, ChargeHistoryStore chargeHistoryStore) {
+        super(balanceChangeHistoryStore, chargeHistoryStore);
     }
 
     @Override
@@ -23,24 +24,18 @@ public class CreditCardPay extends AbstractPaymentMethod {
     }
 
     @Override
-    public Balance charge(Balance balance, BigDecimal amount, Object paymentDetails) {
-
+    protected BigDecimal executeCharge(Balance balance, BigDecimal amount, Object paymentDetails) {
         ObjectMapper objectMapper = new ObjectMapper();
         Card card = objectMapper.convertValue(paymentDetails, Card.class);
 
-        // 신용카드 정보로 충전하는 로직이 있다고 가정.
-
-        balance.changeBalance(amount);
-
-        return balance;
+        //충전을 위한 결제 로직이 있다고 가정하고 호출했다 치자.
+        return amount;
     }
 
     @Override
-    public Balance executePayment(PurchaseEvent purchaseEvent, Balance balance) {
-        // 실제 결제 로직
+    protected BigDecimal executePayment(PurchaseEvent purchaseEvent, Balance balance) {
         BigDecimal buyAmount = purchaseEvent.getAmount();
-        balance.changeBalance(buyAmount.negate());
-        return balance;
+        return buyAmount;
     }
 
     @Data

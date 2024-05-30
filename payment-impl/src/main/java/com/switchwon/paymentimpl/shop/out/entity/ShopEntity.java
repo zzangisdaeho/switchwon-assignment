@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,11 @@ public class ShopEntity extends Shop {
     @Override
     public String getMerchantId() {
         return super.getMerchantId();
+    }
+
+    @Override
+    public BigDecimal getFeePercent() {
+        return super.getFeePercent();
     }
 
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, orphanRemoval = true)

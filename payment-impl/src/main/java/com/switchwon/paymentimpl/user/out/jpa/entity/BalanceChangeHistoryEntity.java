@@ -1,22 +1,19 @@
-package com.switchwon.paymentimpl.user.out.entity;
+package com.switchwon.paymentimpl.user.out.jpa.entity;
 
 import com.switchwon.consts.ChangeReason;
 import com.switchwon.consts.Currency;
 import com.switchwon.user.domain.BalanceChangeHistory;
-import com.switchwon.user.domain.User;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
-@Table(name = "balance_change_history")
 public class BalanceChangeHistoryEntity extends BalanceChangeHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Override
-    public Long getHistoryNum() {
-        return super.getHistoryNum();
+    public String getEventId() {
+        return super.getEventId();
     }
 
     @ManyToOne

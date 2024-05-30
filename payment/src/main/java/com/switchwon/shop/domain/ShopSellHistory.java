@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class ShopSellHistory {
 
-    private String transactionId;
+    private String eventId;
 
     private Shop shop;
 

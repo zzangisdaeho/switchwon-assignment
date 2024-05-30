@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class BalanceChangeHistory {
 
-    private Long historyNum;
+    private String eventId;
 
     private User user;
 

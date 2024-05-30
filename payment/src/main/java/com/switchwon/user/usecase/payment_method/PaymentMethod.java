@@ -20,30 +20,16 @@ public interface PaymentMethod {
 
         if (currencyBalance.getBalance().compareTo(purchaseEvent.getAmount()) < 0) {
             BigDecimal insufficientAmount = purchaseEvent.getAmount().subtract(currencyBalance.getBalance());
-
-//            currencyBalance = handleChargeTransaction(user, purchaseEvent.getCurrency(), insufficientAmount, purchaseEvent.getPaymentDetails());
-
-
-            currencyBalance = charge(currencyBalance, insufficientAmount, purchaseEvent.getPaymentDetails());
-            recordBalanceChangeHistory(currencyBalance, insufficientAmount, ChangeReason.CHARGE,true);
+            currencyBalance = handleCharge(currencyBalance, insufficientAmount, purchaseEvent.getPaymentDetails());
         }
 
-//        return handlePaymentTransaction(user, purchaseEvent, currencyBalance);
-        Balance balance = executePayment(purchaseEvent, currencyBalance);
-        recordBalanceChangeHistory(currencyBalance, purchaseEvent.getAmount(), ChangeReason.BUY,false);
-        return balance;
+        return handlePayment(purchaseEvent, currencyBalance);
     }
 
     Balance getUserBalance(User user, Currency currency);
 
-    Balance handleChargeTransaction(User user, Currency currency, BigDecimal amount, Object paymentDetails);
+    Balance handleCharge(Balance balance, BigDecimal amount, Object paymentDetails);
 
-    Balance handlePaymentTransaction(User user, PurchaseEvent purchaseEvent, Balance balance);
-
-    Balance charge(Balance balance, BigDecimal amount, Object paymentDetails);
-
-    Balance executePayment(PurchaseEvent purchaseEvent, Balance balance);
-
-    BalanceChangeHistory recordBalanceChangeHistory(Balance balance, BigDecimal amount, ChangeReason changeReason, boolean plus);
+    Balance handlePayment(PurchaseEvent purchaseEvent, Balance balance);
 
 }

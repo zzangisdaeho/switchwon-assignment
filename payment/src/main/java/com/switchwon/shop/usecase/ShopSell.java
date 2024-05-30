@@ -17,7 +17,7 @@ public class ShopSell {
     public void sell(PurchaseEvent purchaseEvent){
         BigDecimal fee = purchaseEvent.getShop().calculateFee(purchaseEvent.getAmount(), purchaseEvent.getCurrency());
         ShopSellHistory shopSellHistory = ShopSellHistory.builder()
-                .transactionId(purchaseEvent.getTransactionId())
+                .eventId(purchaseEvent.getTransactionId())
                 .shop(purchaseEvent.getShop())
                 .userId(purchaseEvent.getUser().getUserId())
                 .amount(purchaseEvent.getAmount())
