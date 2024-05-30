@@ -3,10 +3,11 @@ package com.switchwon.shop.usecase;
 import com.switchwon.event.PurchaseEvent;
 import com.switchwon.shop.adaptor.ShopSellHistoryStore;
 import com.switchwon.shop.domain.ShopSellHistory;
+import com.switchwon.shop.usecase.dto.EstimateRequest;
+import com.switchwon.shop.usecase.dto.EstimatedResponse;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ShopSell {
@@ -25,5 +26,15 @@ public class ShopSell {
                 .build();
 
         shopSellHistory = shopSellHistoryStore.save(shopSellHistory);
+    }
+
+    public EstimatedResponse estimate(EstimateRequest estimateRequest){
+        BigDecimal fees = estimateRequest.getShop().calculateFee(estimateRequest.getAmount(), estimateRequest.getCurrency());
+
+        return EstimatedResponse.builder()
+                .total(estimateRequest.getAmount().add(fees))
+                .fees(fees)
+                .currency(estimateRequest.getCurrency())
+                .build();
     }
 }

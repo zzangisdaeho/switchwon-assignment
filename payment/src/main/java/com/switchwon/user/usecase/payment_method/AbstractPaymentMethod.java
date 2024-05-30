@@ -37,13 +37,13 @@ public abstract class AbstractPaymentMethod implements PaymentMethod {
         };
     }
 
-    public BalanceChangeHistory recordBalanceChangeHistory(Balance balance, BigDecimal amount, boolean plus) {
+    public BalanceChangeHistory recordBalanceChangeHistory(Balance balance, BigDecimal amount, ChangeReason changeReason, boolean plus) {
         BalanceChangeHistory balanceChangeHistory = BalanceChangeHistory.builder()
                 .user(balance.getUser())
                 .currency(balance.getCurrency())
                 .changeAmount(plus? balance.getBalance().subtract(amount) : balance.getBalance().add(amount))
                 .currentAmount(balance.getBalance())
-                .reason(ChangeReason.CHARGE)
+                .reason(changeReason)
                 .build();
 
         return balanceChangeHistoryStore.recordHistory(balanceChangeHistory);
