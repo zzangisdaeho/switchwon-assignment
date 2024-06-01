@@ -6,6 +6,7 @@ import com.switchwon.user.adaptor.ChargeHistoryStore;
 import com.switchwon.user.adaptor.PointStore;
 import com.switchwon.user.adaptor.UserStore;
 import com.switchwon.user.usecase.UserBuy;
+import com.switchwon.user.usecase.UserCharge;
 import com.switchwon.user.usecase.UserInfo;
 import com.switchwon.user.usecase.payment_method.PaymentMethod;
 import com.switchwon.user.usecase.payment_method.impl.CreditCardPay;
@@ -28,7 +29,11 @@ public class UserBeanCreation {
     }
 
     @Bean
-    public PaymentMethod creditCardPay(PointStore pointStore, PointChangeHistoryStore pointChangeHistoryStore, ChargeHistoryStore chargeHistoryStore, ObjectMapper objectMapper){
-        return new CreditCardPay(pointStore, pointChangeHistoryStore, chargeHistoryStore, objectMapper);
+    public PaymentMethod creditCardPay(PointStore pointStore, PointChangeHistoryStore pointChangeHistoryStore, ChargeHistoryStore chargeHistoryStore, UserCharge userCharge, ObjectMapper objectMapper){
+        return new CreditCardPay(pointStore, pointChangeHistoryStore, chargeHistoryStore, userCharge,objectMapper);
+    }
+
+    @Bean UserCharge userCharge(PointStore pointStore, PointChangeHistoryStore pointChangeHistoryStore, ChargeHistoryStore chargeHistoryStore){
+        return new UserCharge(pointStore, pointChangeHistoryStore, chargeHistoryStore);
     }
 }
