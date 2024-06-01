@@ -1,13 +1,19 @@
 package com.switchwon.paymentimpl.user.out.jpa.entity;
 
 import com.switchwon.consts.Currency;
+import com.switchwon.paymentimpl.util.JsonAttributeConverter;
 import com.switchwon.user.domain.ChargeHistory;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
+@SuperBuilder
+@NoArgsConstructor
 public class ChargeHistoryEntity extends ChargeHistory {
 
     @Id
@@ -42,6 +48,12 @@ public class ChargeHistoryEntity extends ChargeHistory {
     @Override
     public ZonedDateTime getEventTime() {
         return super.getEventTime();
+    }
+
+    @Convert(converter = JsonAttributeConverter.class)
+    @Override
+    public Object getChargeBy() {
+        return super.getChargeBy();
     }
 
     @PreUpdate

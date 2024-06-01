@@ -1,5 +1,6 @@
 package com.switchwon.consts;
 
+import com.switchwon.error.ResourceNotFoundException;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -27,7 +28,7 @@ public enum Currency {
         return Arrays.stream(Currency.values())
                 .filter(method -> method.currencyString.equals(currencyString))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid payment method: " + currencyString));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid payment method: " + currencyString));
     }
 
 

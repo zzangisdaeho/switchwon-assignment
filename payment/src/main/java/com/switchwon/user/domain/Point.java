@@ -2,15 +2,16 @@ package com.switchwon.user.domain;
 
 import com.switchwon.consts.Currency;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Setter
-public class Balance {
+@SuperBuilder
+public class Point {
 
     private BigDecimal balance;
 
@@ -21,10 +22,4 @@ public class Balance {
     public void changeBalance(BigDecimal amount) {
         this.balance = balance.add(amount);
     }
-
-    public void setUser(User user){
-        this.user = user;
-        user.balances().add(this);
-    }
-
 }

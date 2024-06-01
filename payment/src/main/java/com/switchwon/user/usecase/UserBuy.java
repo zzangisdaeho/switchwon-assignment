@@ -1,8 +1,7 @@
 package com.switchwon.user.usecase;
 
-import com.switchwon.consts.PayType;
 import com.switchwon.event.PurchaseEvent;
-import com.switchwon.user.domain.Balance;
+import com.switchwon.user.domain.Point;
 import com.switchwon.user.usecase.payment_method.PaymentMethod;
 import lombok.RequiredArgsConstructor;
 
@@ -18,8 +17,6 @@ public class UserBuy {
         PaymentMethod handler = paymentMethodList.stream().filter(paymentMethod -> paymentMethod.able(purchaseEvent.getPaymentMethod()))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("payType not matched"));
 
-        Balance balance = handler.processPayment(purchaseEvent);
-
-
+        Point point = handler.processPayment(purchaseEvent);
     }
 }

@@ -1,5 +1,7 @@
 package com.switchwon.consts;
 
+import com.switchwon.error.ResourceNotFoundException;
+
 import java.util.Arrays;
 
 public enum PayType {
@@ -16,6 +18,6 @@ public enum PayType {
         return Arrays.stream(PayType.values())
                 .filter(method -> method.payWay.equalsIgnoreCase(paymentMethod))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid payment method: " + paymentMethod));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid payment method: " + paymentMethod));
     }
 }

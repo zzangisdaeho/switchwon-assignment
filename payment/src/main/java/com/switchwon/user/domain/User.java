@@ -1,6 +1,7 @@
 package com.switchwon.user.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,24 +10,24 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class User {
 
     private String userId;
 
     @Builder.Default
-    private List<Balance> balances = new ArrayList<>();
+    private List<Point> points = new ArrayList<>();
 
-    public List<Balance> balances(){
-        return this.balances;
+    public List<Point> points(){
+        return this.points;
     }
 
-    public List<? extends Balance> getBalances(){
-        return balances;
+    public List<? extends Point> getPoints(){
+        return points;
     }
 
-    public void addBalance(Balance balance){
-        this.balances.add(balance);
-        balance.setUser(this);
+    public void addBalance(Point point){
+        this.points.add(point);
+        point.setUser(this);
     }
 }

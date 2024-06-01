@@ -2,13 +2,17 @@ package com.switchwon.user.domain;
 
 import com.switchwon.consts.Currency;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class ChargeHistory {
 
     private String eventId;
@@ -23,8 +27,14 @@ public class ChargeHistory {
 
     private ZonedDateTime eventTime;
 
+    private Object chargeBy;
+
     public enum ChargeStatus{
-        PROGRESS, FAIL, SUCCESS
+        PROGRESS, CHARGE_FAIL, CHARGE_SUCCESS, POINT_UPDATE_FAIL, FINISH
+    }
+
+    public void updateStatus(ChargeStatus chargeStatus){
+        this.chargeStatus = chargeStatus;
     }
 
 }

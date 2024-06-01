@@ -1,6 +1,7 @@
 package com.switchwon.shop.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -9,7 +10,7 @@ import java.time.ZonedDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class ShopSellHistory {
 
     private String eventId;

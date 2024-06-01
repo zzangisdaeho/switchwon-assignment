@@ -4,13 +4,24 @@ import com.switchwon.consts.ChangeReason;
 import com.switchwon.consts.Currency;
 import com.switchwon.user.domain.BalanceChangeHistory;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Entity
+@SuperBuilder
+@NoArgsConstructor
 public class BalanceChangeHistoryEntity extends BalanceChangeHistory {
 
     @Id
+    @GeneratedValue
+    @Override
+    public Long getChangeNo() {
+        return super.getChangeNo();
+    }
+
     @Override
     public String getEventId() {
         return super.getEventId();
@@ -36,10 +47,14 @@ public class BalanceChangeHistoryEntity extends BalanceChangeHistory {
         return super.getChangeAmount();
     }
 
-    @Column(name = "current_amount", nullable = false)
     @Override
-    public BigDecimal getCurrentAmount() {
-        return super.getCurrentAmount();
+    public BigDecimal getBeforeChangeAmount() {
+        return super.getBeforeChangeAmount();
+    }
+
+    @Override
+    public BigDecimal getAfterChangeAmount() {
+        return super.getAfterChangeAmount();
     }
 
     @Enumerated(EnumType.STRING)

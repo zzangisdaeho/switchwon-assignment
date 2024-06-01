@@ -32,6 +32,7 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     // https://mvnrepository.com/artifact/org.apache.avro/avro
     implementation 'org.apache.avro:avro:1.11.3'
+//    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-avro:2.13.3'
 
 //    compileOnly 'org.projectlombok:lombok'
 //    annotationProcessor 'org.projectlombok:lombok'

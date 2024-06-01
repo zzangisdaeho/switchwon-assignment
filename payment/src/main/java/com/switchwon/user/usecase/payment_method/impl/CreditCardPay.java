@@ -2,20 +2,22 @@ package com.switchwon.user.usecase.payment_method.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchwon.consts.PayType;
-import com.switchwon.user.adaptor.BalanceChangeHistoryStore;
+import com.switchwon.user.adaptor.PointChangeHistoryStore;
 import com.switchwon.user.adaptor.ChargeHistoryStore;
-import com.switchwon.user.adaptor.UserStore;
-import com.switchwon.user.domain.Balance;
+import com.switchwon.user.adaptor.PointStore;
+import com.switchwon.user.domain.Point;
 import com.switchwon.event.PurchaseEvent;
 import com.switchwon.user.usecase.payment_method.AbstractPaymentMethod;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
 
 public class CreditCardPay extends AbstractPaymentMethod {
-    public CreditCardPay(BalanceChangeHistoryStore balanceChangeHistoryStore, ChargeHistoryStore chargeHistoryStore) {
-        super(balanceChangeHistoryStore, chargeHistoryStore);
+    public CreditCardPay(PointStore pointStore, PointChangeHistoryStore pointChangeHistoryStore, ChargeHistoryStore chargeHistoryStore, ObjectMapper objectMapper) {
+        super(pointStore, pointChangeHistoryStore, chargeHistoryStore, objectMapper);
     }
 
     @Override
@@ -24,8 +26,7 @@ public class CreditCardPay extends AbstractPaymentMethod {
     }
 
     @Override
-    protected BigDecimal executeCharge(Balance balance, BigDecimal amount, Object paymentDetails) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    protected BigDecimal executeCharge(Point point, BigDecimal amount, Object paymentDetails) {
         Card card = objectMapper.convertValue(paymentDetails, Card.class);
 
         //충전을 위한 결제 로직이 있다고 가정하고 호출했다 치자.
@@ -33,18 +34,20 @@ public class CreditCardPay extends AbstractPaymentMethod {
     }
 
     @Override
-    protected BigDecimal executePayment(PurchaseEvent purchaseEvent, Balance balance) {
+    protected BigDecimal executePayment(PurchaseEvent purchaseEvent, Point point) {
         BigDecimal buyAmount = purchaseEvent.getAmount();
         return buyAmount;
     }
 
     @Data
     @ToString
-    private class Card {
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class Card {
 
         private String cardNumber;
 
-        private String date;
+        private String expiryDate;
 
         private String cvv;
     }

@@ -1,5 +1,6 @@
 package com.switchwon.paymentimpl.user.out.h2;
 
+import com.switchwon.error.UserNotFoundException;
 import com.switchwon.paymentimpl.user.out.jpa.repository.UserEntityRepository;
 import com.switchwon.user.adaptor.UserStore;
 import com.switchwon.user.domain.User;
@@ -16,6 +17,6 @@ public class UserStoreH2 implements UserStore {
 
     @Override
     public User findById(String userId) {
-        return userEntityRepository.findById(userId).orElseThrow();
+        return userEntityRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 }

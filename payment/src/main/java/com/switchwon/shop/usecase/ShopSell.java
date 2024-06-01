@@ -3,8 +3,7 @@ package com.switchwon.shop.usecase;
 import com.switchwon.event.PurchaseEvent;
 import com.switchwon.shop.adaptor.ShopSellHistoryStore;
 import com.switchwon.shop.domain.ShopSellHistory;
-import com.switchwon.shop.usecase.dto.EstimateRequest;
-import com.switchwon.shop.usecase.dto.EstimatedResponse;
+import com.switchwon.shop.usecase.dto.EstimateParam;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -26,15 +25,15 @@ public class ShopSell {
                 .build();
 
         shopSellHistory = shopSellHistoryStore.save(shopSellHistory);
+
+        purchaseEvent.getPurchaseResult().setTradeTime(shopSellHistory.getEventTime());
     }
 
-    public EstimatedResponse estimate(EstimateRequest estimateRequest){
-        BigDecimal fees = estimateRequest.getShop().calculateFee(estimateRequest.getAmount(), estimateRequest.getCurrency());
+    public BigDecimal calculateFee(EstimateParam estimateParam){
+        return estimateParam.getShop().calculateFee(estimateParam.getAmount(), estimateParam.getCurrency());
+    }
 
-        return EstimatedResponse.builder()
-                .total(estimateRequest.getAmount().add(fees))
-                .fees(fees)
-                .currency(estimateRequest.getCurrency())
-                .build();
+    public BigDecimal calculateTotal(EstimateParam estimateParam){
+        return estimateParam.getShop().calculateTotalAmount(estimateParam.getAmount(), estimateParam.getCurrency());
     }
 }

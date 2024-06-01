@@ -3,6 +3,7 @@ package com.switchwon.user.domain;
 import com.switchwon.consts.ChangeReason;
 import com.switchwon.consts.Currency;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -11,8 +12,10 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class BalanceChangeHistory {
+
+    private Long changeNo;
 
     private String eventId;
 
@@ -20,9 +23,11 @@ public class BalanceChangeHistory {
 
     private Currency currency;
 
+    private BigDecimal beforeChangeAmount;
+
     private BigDecimal changeAmount;
 
-    private BigDecimal currentAmount;
+    private BigDecimal afterChangeAmount;
 
     private ChangeReason reason;
 
