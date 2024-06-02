@@ -26,7 +26,7 @@ public class User {
         return points;
     }
 
-    public void addBalance(Point point){
+    public void addPoint(Point point){
         this.points.add(point);
         point.setUser(this);
     }

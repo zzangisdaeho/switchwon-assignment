@@ -21,5 +21,7 @@ public class Point {
 
     public void changeBalance(BigDecimal amount) {
         this.balance = balance.add(amount);
+
+        if(balance.signum() == -1) throw new IllegalStateException("point balance can't be minus");
     }
 }

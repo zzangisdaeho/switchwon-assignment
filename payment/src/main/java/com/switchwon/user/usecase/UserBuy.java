@@ -12,11 +12,11 @@ public class UserBuy {
 
     private final List<PaymentMethod> paymentMethodList;
 
-    public void buy(PurchaseEvent purchaseEvent){
+    public Point buy(PurchaseEvent purchaseEvent){
 
         PaymentMethod handler = paymentMethodList.stream().filter(paymentMethod -> paymentMethod.able(purchaseEvent.getPaymentMethod()))
                 .findFirst().orElseThrow(() -> new IllegalArgumentException("payType not matched"));
 
-        Point point = handler.processPayment(purchaseEvent);
+        return handler.processPayment(purchaseEvent);
     }
 }

@@ -35,8 +35,8 @@ public class UserEntity extends User {
     }
 
     @Override
-    public void addBalance(Point point) {
-        super.addBalance(point);
+    public void addPoint(Point point) {
+        super.addPoint(point);
     }
 }
 

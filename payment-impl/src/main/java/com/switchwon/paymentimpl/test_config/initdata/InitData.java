@@ -55,8 +55,8 @@ public class InitData {
         balance2.setBalance(BigDecimal.valueOf(Math.random() * 1000000).setScale(0, BigDecimal.ROUND_HALF_UP));
         balance2.setUser(user);
 
-        user.addBalance(balance1);
-        user.addBalance(balance2);
+        user.addPoint(balance1);
+        user.addPoint(balance2);
 
         userEntityRepository.save(user);
 //        balanceEntityRepository.save(balance1);

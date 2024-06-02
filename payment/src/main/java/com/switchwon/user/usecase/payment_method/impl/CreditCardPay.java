@@ -30,6 +30,7 @@ public class CreditCardPay extends AbstractPaymentMethod {
 
     @Override
     protected BigDecimal executeCharge(Point point, BigDecimal amount, Object paymentDetails) {
+
         Card card = objectMapper.convertValue(paymentDetails, Card.class);
 
         System.out.println("CreditCardPay.executeCharge");

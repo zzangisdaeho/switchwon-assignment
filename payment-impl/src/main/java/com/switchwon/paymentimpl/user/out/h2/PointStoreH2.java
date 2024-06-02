@@ -32,7 +32,7 @@ public class PointStoreH2 implements PointStore {
                     .balance(BigDecimal.ZERO)
                     .currency(currency)
                     .build();
-            user.addBalance(build);
+            user.addPoint(build);
             entityManager.lock(build, LockModeType.PESSIMISTIC_READ);
             return build;
         };
